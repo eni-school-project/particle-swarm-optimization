@@ -32,5 +32,5 @@ P_g = \text{the position of the particle that is closest to the objective } P_i
 > With additional parameters like:
 >
 > - $r_1$ and $r_2$, random numbers $\in [0, 1]$
-> - $c_1$ and $c_2$, runtime-defined constants for tunning
+> - $c_1$ and $c_2$, runtime-defined constants for tunning (respectively exploration/cognitive & exploitation/social)s
 > - $\omega$, the inertia
