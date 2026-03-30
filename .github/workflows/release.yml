@@ -1,0 +1,38 @@
+name: Release
+
+on:
+    push:
+        tags:
+            - "[0-9]+.*"
+
+jobs:
+    export:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v6.0.2
+
+            - name: Export with Godot
+              id: export
+              uses: firebelley/godot-export@v7.0.0
+              with:
+                  godot_executable_download_url: "https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_linux.x86_64.zip"
+                  godot_export_templates_download_url: "https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_export_templates.tpz"
+                  relative_project_path: ./
+                  presets_to_export: "Windows Desktop, Linux"
+                  archive_output: true
+                  cache: true
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Create Release
+              uses: ncipollo/release-action@v1.21.0
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  tag: ${{ github.ref_name }}
+                  name: "Release ${{ github.ref_name }}"
+                  artifacts: ${{ steps.export.outputs.archive_directory }}/*
+                  generateReleaseNotes: true
