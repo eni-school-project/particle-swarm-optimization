@@ -11,5 +11,10 @@ config_version=5
 [application]
 
 config/name="particle-swarm-optimization"
+run/main_scene="uid://bcm7u8ay8d1dk"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/stretch/mode="canvas_items"
