@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var particle_number: int = 20
+@export var particle_number: int = 8
 @export var particle_scene: PackedScene
 @export var target_scene: PackedScene
 
@@ -61,24 +61,22 @@ func pso(particles: Array[Particle], _delta: float) -> void:
 			global_best_distance = particle.best_distance
 			global_objective = particle.objective
 	
-	#var omega: float = calculate_omega(particles, target_position)
-	
 	for particle in particles:
-		particle.velocity = randf_range(0.4, 2.0) * particle.velocity \
+		particle.velocity = randf_range(1.0, 2.0) * particle.velocity \
 			+ exploration * randf() * (particle.objective - particle.position) \
 			+ exploitation * randf() * (global_objective - particle.position)
 
 
-#func calculate_omega(particles: Array[Particle], target_position: Vector2) -> float:
-	#var average_distance: float = 0.0
-	#
-	#for particle in particles:
-		#average_distance += particle.position.distance_to(target_position)
-	#average_distance /= particles.size()
-	#
-	#var max_distance: float = screen_size.length()
-	#
-	#return lerp(min_inertia, max_inertia, average_distance / max_distance)
+func reset_pso() -> void:
+	global_best_distance = INF
+	global_objective = Vector2.ZERO
+	
+	var source: Array[Node] = get_tree().get_nodes_in_group("particles")
+	for node in source:
+		if node is Particle:
+			var particle := node as Particle
+			particle.best_distance = INF
+			particle.objective = particle.position
 
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
@@ -91,3 +89,7 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 				add_child(target)
 				target.global_position = get_global_mouse_position()
 				move_child(target, $Particles.get_index())
+			else:
+				var target: Area2D = get_tree().get_first_node_in_group("target") as Area2D
+				target.global_position = get_global_mouse_position()
+				reset_pso()
