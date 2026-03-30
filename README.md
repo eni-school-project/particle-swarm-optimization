@@ -1,5 +1,7 @@
 # Particle Swarm Optimization
 
+![gif-demo](assets/gif.gif)
+
 This is a school project that is supposed to visualize the algorithm of PSO.
 
 Given:
