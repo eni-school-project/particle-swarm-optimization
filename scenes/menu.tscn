@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://coeal18mmc2ou"]
+
+[ext_resource type="Script" uid="uid://dbikmlc8j8pg3" path="res://scripts/menu.gd" id="1_yqeox"]
+[ext_resource type="PackedScene" uid="uid://g0y4ikyj8fsi" path="res://scenes/particle.tscn" id="2_vjb58"]
+
+[node name="Menu" type="Node2D"]
+script = ExtResource("1_yqeox")
+particle_scene = ExtResource("2_vjb58")
+
+[node name="Particles" type="Node2D" parent="."]
