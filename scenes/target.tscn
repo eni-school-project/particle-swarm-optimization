@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://chexux77g0ppm"]
+
+[ext_resource type="Texture2D" uid="uid://bl2dup7bxi50d" path="res://assets/target.png" id="1_b37e2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b5a2r"]
+radius = 8.0
+
+[node name="Target" type="Area2D"]
+collision_layer = 2
+collision_mask = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_b5a2r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_b37e2")
