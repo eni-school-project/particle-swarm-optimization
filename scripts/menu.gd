@@ -2,24 +2,92 @@ extends Node2D
 
 @export var particle_number: int = 20
 @export var particle_scene: PackedScene
+@export var target_scene: PackedScene
+
+@export var exploration: float = 1.0
+@export var exploitation: float = 1.0
+@export var min_inertia: float = 0.4
+@export var max_inertia: float = 0.9
+
 var screen_size: Vector2
+
+var global_objective: Vector2 = Vector2.ZERO
+var global_best_distance: float = INF
 
 func _ready() -> void:
 	screen_size = get_viewport().get_visible_rect().size
 	generate_particles()
 
 
+func _physics_process(delta: float) -> void:
+	if (get_tree().has_group("target")):
+		var source: Array[Node] = get_tree().get_nodes_in_group("particles")
+		var particles: Array[Particle]
+		for node in source:
+			if node is Particle:
+				particles.push_back(node as Particle)
+		
+		pso(particles, delta)
+
+
 func generate_particles() -> void:
 	for i in particle_number:
-		var particle: CharacterBody2D = particle_scene.instantiate()
+		var particle: Particle = particle_scene.instantiate()
 		particle.position = Vector2(
 			randf_range(0.0, screen_size.x),
 			randf_range(0.0, screen_size.y)
 		)
 		
-		var speed: float = randf_range(30.0, 20.0)
+		var speed: float = randf_range(10.0, 30.0)
 		var angle: float = randf() * TAU
 		particle.velocity = Vector2.from_angle(angle) * speed
 		
 		$Particles.add_child(particle)
 		particle.add_to_group("particles")
+
+
+func pso(particles: Array[Particle], _delta: float) -> void:
+	var target: Area2D = get_tree().get_first_node_in_group("target") as Area2D
+	var target_position: Vector2 = target.global_position
+	
+	for particle in particles:
+		var distance: float = particle.position.distance_to(target_position)
+		if (distance < particle.best_distance):
+			particle.best_distance = distance
+			particle.objective = particle.position
+		
+	for particle in particles:
+		if (particle.best_distance < global_best_distance):
+			global_best_distance = particle.best_distance
+			global_objective = particle.objective
+	
+	#var omega: float = calculate_omega(particles, target_position)
+	
+	for particle in particles:
+		particle.velocity = randf_range(0.4, 2.0) * particle.velocity \
+			+ exploration * randf() * (particle.objective - particle.position) \
+			+ exploitation * randf() * (global_objective - particle.position)
+
+
+#func calculate_omega(particles: Array[Particle], target_position: Vector2) -> float:
+	#var average_distance: float = 0.0
+	#
+	#for particle in particles:
+		#average_distance += particle.position.distance_to(target_position)
+	#average_distance /= particles.size()
+	#
+	#var max_distance: float = screen_size.length()
+	#
+	#return lerp(min_inertia, max_inertia, average_distance / max_distance)
+
+
+func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton \
+		and event.button_index == MOUSE_BUTTON_LEFT \
+		and event.pressed:
+			if (not get_tree().has_group("target")):
+				var target: Area2D = target_scene.instantiate()
+				target.add_to_group("target")
+				add_child(target)
+				target.global_position = get_global_mouse_position()
+				move_child(target, $Particles.get_index())

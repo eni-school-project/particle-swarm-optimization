@@ -1,10 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://coeal18mmc2ou"]
+[gd_scene load_steps=5 format=3 uid="uid://coeal18mmc2ou"]
 
 [ext_resource type="Script" uid="uid://dbikmlc8j8pg3" path="res://scripts/menu.gd" id="1_yqeox"]
 [ext_resource type="PackedScene" uid="uid://g0y4ikyj8fsi" path="res://scenes/particle.tscn" id="2_vjb58"]
+[ext_resource type="PackedScene" uid="uid://chexux77g0ppm" path="res://scenes/target.tscn" id="3_con2f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_con2f"]
+size = Vector2(1152, 648)
 
 [node name="Menu" type="Node2D"]
 script = ExtResource("1_yqeox")
 particle_scene = ExtResource("2_vjb58")
+target_scene = ExtResource("3_con2f")
+metadata/_edit_group_ = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(576, 324)
+shape = SubResource("RectangleShape2D_con2f")
 
 [node name="Particles" type="Node2D" parent="."]
+light_mask = 2
+visibility_layer = 2
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
