@@ -1,38 +1,61 @@
 name: Release
 
 on:
-    push:
-        tags:
-            - "[0-9]+.*"
+  push:
+    tags:
+      - "[0-9]+.*"
 
 jobs:
-    export:
-        runs-on: ubuntu-latest
-        permissions:
-            contents: write
+  export:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v6.0.2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
 
-            - name: Export with Godot
-              id: export
-              uses: firebelley/godot-export@v7.0.0
-              with:
-                  godot_executable_download_url: "https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_linux.x86_64.zip"
-                  godot_export_templates_download_url: "https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_export_templates.tpz"
-                  relative_project_path: ./
-                  presets_to_export: "Windows Desktop, Linux"
-                  archive_output: true
-                  cache: true
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Export with Godot
+        id: export
+        uses: firebelley/godot-export@v7.0.0
+        with:
+          godot_executable_download_url: "https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_linux.x86_64.zip"
+          godot_export_templates_download_url: "https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_export_templates.tpz"
+          relative_project_path: ./
+          presets_to_export: "Windows Desktop, Linux"
+          archive_output: true
+          cache: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Create Release
-              uses: ncipollo/release-action@v1.21.0
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  tag: ${{ github.ref_name }}
-                  name: "Release ${{ github.ref_name }}"
-                  artifacts: ${{ steps.export.outputs.archive_directory }}/*
-                  generateReleaseNotes: true
+      - name: Generate Changelog from Commits
+        id: generate_changelog
+        run: |
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "## What's Changed" >> $GITHUB_OUTPUT
+
+          # Get previous tag (works even for the very first release)
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          if [ -z "$PREV_TAG" ]; then
+            RANGE="HEAD"
+            COMPARE_LINK="Initial release"
+          else
+            RANGE="$PREV_TAG..HEAD"
+            COMPARE_LINK="[\`${{ github.ref_name }}\`](https://github.com/${{ github.repository }}/compare/${PREV_TAG}...${{ github.ref_name }})"
+          fi
+
+          git log --pretty=format:"* %s" "$RANGE" >> $GITHUB_OUTPUT
+
+          echo "" >> $GITHUB_OUTPUT
+          echo "**Full Changelog**: $COMPARE_LINK" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1.21.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+          name: "pso ${{ github.ref_name }}"
+          artifacts: ${{ steps.export.outputs.archive_directory }}/*
+          generateReleaseNotes: false
+          body: ${{ steps.generate_changelog.outputs.changelog }}
