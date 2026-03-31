@@ -28,14 +28,16 @@ func _physics_process(delta: float) -> void:
 			#target.global_position = mouse_pos
 			#reset_pso()
 	
-	if (get_tree().has_group("target")):
+	if get_tree().has_group("target"):
 		var source: Array[Node] = get_tree().get_nodes_in_group("particles")
 		var particles: Array[Particle]
+		
 		for node in source:
 			if node is Particle:
 				particles.push_back(node as Particle)
 		
 		pso(particles, delta)
+	
 	else:
 		reset_pso()
 
@@ -54,6 +56,12 @@ func generate_particles() -> void:
 		
 		$Particles.add_child(particle)
 		particle.add_to_group("particles")
+
+
+func _set_particles_target(value: bool) -> void:
+	for node in get_tree().get_nodes_in_group("particles"):
+		if node is Particle:
+			(node as Particle).set_target(value)
 
 
 func pso(particles: Array[Particle], _delta: float) -> void:
@@ -91,19 +99,26 @@ func reset_pso() -> void:
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT \
-		and event.pressed:
-			if (not get_tree().has_group("target")):
+		
+		if (event.button_index == MOUSE_BUTTON_LEFT) and event.pressed:
+			if get_tree().has_group("target"):
+				var target: Area2D = get_tree().get_first_node_in_group("target") as Area2D
+				target.global_position = get_global_mouse_position()
+				
+				reset_pso()
+			
+			else:
 				var target: Area2D = target_scene.instantiate()
 				target.add_to_group("target")
 				add_child(target)
+				
 				target.global_position = get_global_mouse_position()
 				move_child(target, $Particles.get_index())
-			else:
-				var target: Area2D = get_tree().get_first_node_in_group("target") as Area2D
-				target.global_position = get_global_mouse_position()
-				reset_pso()
+				
+				_set_particles_target(true)
 		
-		elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			var target: Area2D = get_tree().get_first_node_in_group("target") as Area2D
-			remove_child(target)
+		elif (event.button_index == MOUSE_BUTTON_RIGHT) and event.pressed:
+			if get_tree().has_group("target"):
+				var target: Area2D = get_tree().get_first_node_in_group("target") as Area2D
+				target.queue_free()
+				_set_particles_target(false)
