@@ -17,6 +17,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Prevent bad release names
+        run: |
+          if [[ "${{ github.ref_name }}" == "master" || "${{ github.ref_name }}" == "main" ]]; then
+            echo "Branch name release, so NOPE bro '${{ github.ref_name }}'"
+            exit 1
+          fi
+
       - name: Export with Godot
         id: export
         uses: firebelley/godot-export@v7.0.0
@@ -33,7 +40,8 @@ jobs:
       - name: Generate changelog from commits
         id: generate_changelog
         run: |
-          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          DELIMITER=$(openssl rand -hex 8)
+          echo "changelog<<${DELIMITER}" >> $GITHUB_OUTPUT
           echo "## What's changed" >> $GITHUB_OUTPUT
 
           PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
@@ -46,9 +54,29 @@ jobs:
           fi
 
           REPO="${{ github.repository }}"
-          FEATURES=$(git log --pretty=format:"* %s|%h" "$RANGE" | grep -i "^* feat:" | sed 's/^* [Ff]eat: //' | sed "s||\(.*\)| ([\`\1\`](https://github.com/${REPO}/commit/\1))|")
-          FIXES=$(git log --pretty=format:"* %s|%h" "$RANGE" | grep -i "^* fix:" | sed 's/^* [Ff]ix: //' | sed "s||\(.*\)| ([\`\1\`](https://github.com/${REPO}/commit/\1))|")
-          OTHER=$(git log --pretty=format:"* %s|%h" "$RANGE" | grep -iv "^* feat:\|^* fix:" | sed "s||\(.*\)| ([\`\1\`](https://github.com/${REPO}/commit/\1))|")
+
+          format_commits() {
+            sed "s#|\([a-f0-9]*\)# ([\`\1\`](https://github.com/${REPO}/commit/\1))#"
+          }
+
+          FEATURES=$(git log --pretty=format:"* %s|%h" "$RANGE" \
+            | grep -iE "^\* [Ff]eat(ure)? ?: " \
+            | sed 's/^\* [Ff]eat\(ure\)\? \?: //' \
+            | format_commits)
+
+          FIXES=$(git log --pretty=format:"* %s|%h" "$RANGE" \
+            | grep -iE "^\* [Ff]ix(ed)? ?: " \
+            | sed 's/^\* [Ff]ix\(ed\)\? \?: //' \
+            | format_commits)
+
+          PERF=$(git log --pretty=format:"* %s|%h" "$RANGE" \
+            | grep -iE "^\* [Pp]erf ?: " \
+            | sed 's/^\* [Pp]erf \?: //' \
+            | format_commits)
+
+          OTHER=$(git log --pretty=format:"* %s|%h" "$RANGE" \
+            | grep -ivE "^\* ([Ff]eat(ure)?|[Ff]ix(ed)?|[Pp]erf) ?: " \
+            | format_commits)
 
           if [ -n "$FEATURES" ]; then
             echo "### Features" >> $GITHUB_OUTPUT
@@ -62,23 +90,20 @@ jobs:
             echo "" >> $GITHUB_OUTPUT
           fi
 
+          if [ -n "$PERF" ]; then
+            echo "### Performance" >> $GITHUB_OUTPUT
+            echo "$PERF" >> $GITHUB_OUTPUT
+            echo "" >> $GITHUB_OUTPUT
+          fi
+
           if [ -n "$OTHER" ]; then
             echo "### Other" >> $GITHUB_OUTPUT
             echo "$OTHER" >> $GITHUB_OUTPUT
             echo "" >> $GITHUB_OUTPUT
           fi
 
-          echo "" >> $GITHUB_OUTPUT
-          echo "" >> $GITHUB_OUTPUT
           echo "**Full Changelog**: $COMPARE_LINK" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-      - name: Prevent bad release names
-        run: |
-          if [[ "${{ github.ref_name }}" == "master" || "${{ github.ref_name }}" == "main" ]]; then
-            echo "Branch name release, so NOPE bro '${{ github.ref_name }}'"
-            exit 1
-          fi
+          echo "${DELIMITER}" >> $GITHUB_OUTPUT
 
       - name: Create Release
         uses: ncipollo/release-action@v1.21.0
