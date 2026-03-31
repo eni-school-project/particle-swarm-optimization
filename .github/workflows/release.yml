@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2
+        with:
+          fetch-depth: 0
 
       - name: Export with Godot
         id: export
@@ -43,8 +45,29 @@ jobs:
             COMPARE_LINK="[\`${{ github.ref_name }}\`](https://github.com/${{ github.repository }}/compare/${PREV_TAG}...${{ github.ref_name }})"
           fi
 
-          git log --pretty=format:"* %s" "$RANGE" >> $GITHUB_OUTPUT
+          FEATURES=$(git log --pretty=format:"* %s|%h" "$RANGE" | grep -i "^* feat:" | sed 's/^* [Ff]eat: //' | sed "s/|\(.*\)/ ([\`\1\`](https:\/\/github.com\/${{ github.repository }}\/commit\/\1))/")
+          FIXES=$(git log --pretty=format:"* %s|%h" "$RANGE" | grep -i "^* fix:" | sed 's/^* [Ff]ix: //' | sed "s/|\(.*\)/ ([\`\1\`](https:\/\/github.com\/${{ github.repository }}\/commit\/\1))/")
+          OTHER=$(git log --pretty=format:"* %s|%h" "$RANGE" | grep -iv "^* feat:\|^* fix:" | sed "s/|\(.*\)/ ([\`\1\`](https:\/\/github.com\/${{ github.repository }}\/commit\/\1))/")
 
+          if [ -n "$FEATURES" ]; then
+            echo "### Features" >> $GITHUB_OUTPUT
+            echo "$FEATURES" | sed 's/^/* /' >> $GITHUB_OUTPUT
+            echo "" >> $GITHUB_OUTPUT
+          fi
+
+          if [ -n "$FIXES" ]; then
+            echo "### Bug fixes" >> $GITHUB_OUTPUT
+            echo "$FIXES" | sed 's/^/* /' >> $GITHUB_OUTPUT
+            echo "" >> $GITHUB_OUTPUT
+          fi
+
+          if [ -n "$OTHER" ]; then
+            echo "### Other" >> $GITHUB_OUTPUT
+            echo "$OTHER" >> $GITHUB_OUTPUT
+            echo "" >> $GITHUB_OUTPUT
+          fi
+
+          echo "" >> $GITHUB_OUTPUT
           echo "" >> $GITHUB_OUTPUT
           echo "**Full Changelog**: $COMPARE_LINK" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
