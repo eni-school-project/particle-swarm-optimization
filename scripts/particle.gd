@@ -1,8 +1,8 @@
 class_name Particle
 extends CharacterBody2D
 
-@export var max_speed: float = 200.0
-@export var wander_strength: float = 5.0
+@export var max_speed: float = 20.0
+@export var wander_strength: float = 15.0
 @export var change_direction_every: float = 0.1
 
 var wander_timer: float = 0.0
@@ -12,10 +12,12 @@ var best_distance: float = INF
 
 func _physics_process(delta: float) -> void:
 	move_and_slide()
-		
+	
+	max_speed = 200.0 if get_tree().has_group("target") else 20.0
+	
 	if velocity.length() > max_speed:
 		velocity = velocity.limit_length(max_speed)
-		
+	
 	if (not get_tree().has_group("target")):
 		wander_timer -= delta
 		if wander_timer <= 0.0:
