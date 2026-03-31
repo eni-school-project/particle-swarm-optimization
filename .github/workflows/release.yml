@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - "[0-9]+.*"
+      - "[0-9]+.[0-9]+*"
 
 jobs:
   export:
@@ -24,7 +24,7 @@ jobs:
           relative_project_path: ./
           presets_to_export: "Windows Desktop, Linux"
           archive_output: true
-          cache: true
+          cache: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -50,9 +50,18 @@ jobs:
           echo "**Full Changelog**: $COMPARE_LINK" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+      - name: Prevent bad release names
+        run: |
+          if [[ "${{ github.ref_name }}" == "master" || "${{ github.ref_name }}" == "main" ]]; then
+            echo "Branch name release, so NOPE bro '${{ github.ref_name }}'"
+            exit 1
+          fi
+
       - name: Create Release
         uses: ncipollo/release-action@v1.21.0
         with:
+          draft: false
+          prerelease: true
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
           name: "pso ${{ github.ref_name }}"
