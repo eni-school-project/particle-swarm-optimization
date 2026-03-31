@@ -7,31 +7,30 @@ extends CharacterBody2D
 
 var wander_timer: float = 0.0
 
+var has_target: bool = false
 var objective: Vector2 = Vector2.ZERO
 var best_distance: float = INF
 
 func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
-	max_speed = 200.0 if get_tree().has_group("target") else 20.0
-	
-	if velocity.length() > max_speed:
+	if (velocity.length() > max_speed):
 		velocity = velocity.limit_length(max_speed)
-	
-	if (not get_tree().has_group("target")):
+
+	if not has_target:
 		wander_timer -= delta
-		if wander_timer <= 0.0:
+		if (wander_timer <= 0.0):
 			var random_nudge = Vector2.from_angle(randf() * TAU) * wander_strength
 			velocity += random_nudge
 			wander_timer = change_direction_every
 		
 		var viewport = get_viewport_rect()
-		if position.x < 0:
-			position.x = viewport.size.x
-		elif position.x > viewport.size.x:
-			position.x = 0
-		
-		if position.y < 0:
-			position.y = viewport.size.y
-		elif position.y > viewport.size.y:
-			position.y = 0
+		if (position.x < 0): position.x = viewport.size.x
+		elif (position.x > viewport.size.x): position.x = 0
+		if (position.y < 0): position.y = viewport.size.y
+		elif (position.y > viewport.size.y): position.y = 0
+
+
+func set_target(value: bool) -> void:
+	has_target = value
+	max_speed = 200.0 if has_target else 20.0
