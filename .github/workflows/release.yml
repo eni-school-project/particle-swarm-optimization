@@ -33,7 +33,7 @@ jobs:
           relative_project_path: ./
           presets_to_export: "Windows Desktop, Linux"
           archive_output: true
-          cache: false
+          cache: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -41,69 +41,58 @@ jobs:
         id: generate_changelog
         run: |
           DELIMITER=$(openssl rand -hex 8)
-          echo "changelog<<${DELIMITER}" >> $GITHUB_OUTPUT
-          echo "## What's changed" >> $GITHUB_OUTPUT
+          {
+            echo "changelog<<${DELIMITER}"
+            echo "## What's changed"
+            echo ""
 
-          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
-          if [ -z "$PREV_TAG" ]; then
-            RANGE="HEAD"
-            COMPARE_LINK="Initial release"
-          else
-            RANGE="$PREV_TAG..HEAD"
-            COMPARE_LINK="[\`${{ github.ref_name }}\`](https://github.com/${{ github.repository }}/compare/${PREV_TAG}...${{ github.ref_name }})"
-          fi
+            PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+            if [ -z "$PREV_TAG" ]; then
+              RANGE="HEAD"
+              COMPARE_LINK="Initial release"
+            else
+              RANGE="$PREV_TAG..HEAD"
+              COMPARE_LINK="[\`${{ github.ref_name }}\`](https://github.com/${{ github.repository }}/compare/${PREV_TAG}...${{ github.ref_name }})"
+            fi
 
-          REPO="${{ github.repository }}"
+            LOG_FILE=$(mktemp)
+            git log --pretty=format:"%s|%h" "$RANGE" > "$LOG_FILE"
 
-          format_commits() {
-            sed "s#|\([a-f0-9]*\)# ([\`\1\`](https://github.com/${REPO}/commit/\1))#"
-          }
+            format_commits() {
+              sed -E 's/^(.*)\|([a-f0-9]+)$/- \1 ([`\2`](https:\/\/github.com\/${{ github.repository }}\/commit\/\2))/'
+            }
 
-          FEATURES=$(git log --pretty=format:"* %s|%h" "$RANGE" \
-            | grep -iE "^\* [Ff]eat(ure)? ?: " \
-            | sed 's/^\* [Ff]eat\(ure\)\? \?: //' \
-            | format_commits)
+            print_section() {
+              local title=$1
+              local pattern=$2
+              local data
+              data=$(grep -iE "$pattern" "$LOG_FILE" | sed -E "s/$pattern//i" | format_commits)
+              
+              if [ -n "$data" ]; then
+                echo "### $title"
+                echo ""
+                echo "$data"
+                echo ""
+              fi
+            }
 
-          FIXES=$(git log --pretty=format:"* %s|%h" "$RANGE" \
-            | grep -iE "^\* [Ff]ix(ed)? ?: " \
-            | sed 's/^\* [Ff]ix\(ed\)\? \?: //' \
-            | format_commits)
+            print_section "Features" "^feat(ure)?\s*:\s*"
+            print_section "Bug Fixes" "^fix(ed)?\s*:\s*"
+            print_section "Performance" "^perf\s*:\s*"
+            
+            OTHER=$(grep -ivE "^(feat(ure)?|fix(ed)?|perf)\s*:\s*" "$LOG_FILE" | format_commits)
+            if [ -n "$OTHER" ]; then
+              echo "### Other Changes"
+              echo ""
+              echo "$OTHER"
+              echo ""
+            fi
 
-          PERF=$(git log --pretty=format:"* %s|%h" "$RANGE" \
-            | grep -iE "^\* [Pp]erf ?: " \
-            | sed 's/^\* [Pp]erf \?: //' \
-            | format_commits)
-
-          OTHER=$(git log --pretty=format:"* %s|%h" "$RANGE" \
-            | grep -ivE "^\* ([Ff]eat(ure)?|[Ff]ix(ed)?|[Pp]erf) ?: " \
-            | format_commits)
-
-          if [ -n "$FEATURES" ]; then
-            echo "### Features" >> $GITHUB_OUTPUT
-            echo "$FEATURES" >> $GITHUB_OUTPUT
-            echo "" >> $GITHUB_OUTPUT
-          fi
-
-          if [ -n "$FIXES" ]; then
-            echo "### Bug fixes" >> $GITHUB_OUTPUT
-            echo "$FIXES" >> $GITHUB_OUTPUT
-            echo "" >> $GITHUB_OUTPUT
-          fi
-
-          if [ -n "$PERF" ]; then
-            echo "### Performance" >> $GITHUB_OUTPUT
-            echo "$PERF" >> $GITHUB_OUTPUT
-            echo "" >> $GITHUB_OUTPUT
-          fi
-
-          if [ -n "$OTHER" ]; then
-            echo "### Other" >> $GITHUB_OUTPUT
-            echo "$OTHER" >> $GITHUB_OUTPUT
-            echo "" >> $GITHUB_OUTPUT
-          fi
-
-          echo "**Full Changelog**: $COMPARE_LINK" >> $GITHUB_OUTPUT
-          echo "${DELIMITER}" >> $GITHUB_OUTPUT
+            echo "---"
+            echo ""
+            echo "**Full Changelog**: $COMPARE_LINK"
+            echo "${DELIMITER}"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Create Release
         uses: ncipollo/release-action@v1.21.0
