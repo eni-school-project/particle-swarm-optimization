@@ -6,8 +6,8 @@ extends Node2D
 
 @export var exploration: float = 1.0
 @export var exploitation: float = 1.0
-@export var min_inertia: float = 0.4
-@export var max_inertia: float = 0.9
+#@export var min_inertia: float = 0.4
+#@export var max_inertia: float = 0.9
 
 var screen_size: Vector2
 
@@ -65,7 +65,7 @@ func pso(particles: Array[Particle], _delta: float) -> void:
 		if (distance < particle.best_distance):
 			particle.best_distance = distance
 			particle.objective = particle.position
-		
+	
 	for particle in particles:
 		if (particle.best_distance < global_best_distance):
 			global_best_distance = particle.best_distance

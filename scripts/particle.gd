@@ -30,7 +30,7 @@ func _physics_process(delta: float) -> void:
 			position.x = viewport.size.x
 		elif position.x > viewport.size.x:
 			position.x = 0
-			
+		
 		if position.y < 0:
 			position.y = viewport.size.y
 		elif position.y > viewport.size.y:
