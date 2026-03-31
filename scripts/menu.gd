@@ -20,6 +20,14 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	# uncomment below for the target to follow mouse once created
+	#if get_tree().has_group("target"):
+		#var target: Area2D = get_tree().get_first_node_in_group("target") as Area2D
+		#var mouse_pos = get_global_mouse_position()
+		#if target.global_position != mouse_pos:
+			#target.global_position = mouse_pos
+			#reset_pso()
+	
 	if (get_tree().has_group("target")):
 		var source: Array[Node] = get_tree().get_nodes_in_group("particles")
 		var particles: Array[Particle]
