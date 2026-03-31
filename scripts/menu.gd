@@ -36,6 +36,8 @@ func _physics_process(delta: float) -> void:
 				particles.push_back(node as Particle)
 		
 		pso(particles, delta)
+	else:
+		reset_pso()
 
 
 func generate_particles() -> void:
@@ -46,7 +48,7 @@ func generate_particles() -> void:
 			randf_range(0.0, screen_size.y)
 		)
 		
-		var speed: float = randf_range(10.0, 30.0)
+		var speed: float = randf_range(10.0, 20.0)
 		var angle: float = randf() * TAU
 		particle.velocity = Vector2.from_angle(angle) * speed
 		
@@ -88,8 +90,8 @@ func reset_pso() -> void:
 
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if event is InputEventMouseButton \
-		and event.button_index == MOUSE_BUTTON_LEFT \
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT \
 		and event.pressed:
 			if (not get_tree().has_group("target")):
 				var target: Area2D = target_scene.instantiate()
@@ -101,3 +103,7 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 				var target: Area2D = get_tree().get_first_node_in_group("target") as Area2D
 				target.global_position = get_global_mouse_position()
 				reset_pso()
+		
+		elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			var target: Area2D = get_tree().get_first_node_in_group("target") as Area2D
+			remove_child(target)
