@@ -28,13 +28,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate Changelog from Commits
+      - name: Generate changelog from commits
         id: generate_changelog
         run: |
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
-          echo "## What's Changed" >> $GITHUB_OUTPUT
+          echo "## What's changed" >> $GITHUB_OUTPUT
 
-          # Get previous tag (works even for the very first release)
           PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
           if [ -z "$PREV_TAG" ]; then
             RANGE="HEAD"
