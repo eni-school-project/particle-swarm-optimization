@@ -46,9 +46,9 @@ jobs:
           fi
 
           REPO="${{ github.repository }}"
-          FEATURES=$(git log --pretty=format:"* %s|%h" "$RANGE" | grep -i "^* feat:" | sed 's/^* [Ff]eat: //' | sed "s/|\(.*\)/ ([\`\1\`](https:\/\/github.com\/${REPO}\/commit\/\1))/")
-          FIXES=$(git log --pretty=format:"* %s|%h" "$RANGE" | grep -i "^* fix:" | sed 's/^* [Ff]ix: //' | sed "s/|\(.*\)/ ([\`\1\`](https:\/\/github.com\/${REPO}\/commit\/\1))/")
-          OTHER=$(git log --pretty=format:"* %s|%h" "$RANGE" | grep -iv "^* feat:\|^* fix:" | sed "s/|\(.*\)/ ([\`\1\`](https:\/\/github.com\/${REPO}\/commit\/\1))/")
+          FEATURES=$(git log --pretty=format:"* %s|%h" "$RANGE" | grep -i "^* feat:" | sed 's/^* [Ff]eat: //' | sed "s||\(.*\)| ([\`\1\`](https://github.com/${REPO}/commit/\1))|")
+          FIXES=$(git log --pretty=format:"* %s|%h" "$RANGE" | grep -i "^* fix:" | sed 's/^* [Ff]ix: //' | sed "s||\(.*\)| ([\`\1\`](https://github.com/${REPO}/commit/\1))|")
+          OTHER=$(git log --pretty=format:"* %s|%h" "$RANGE" | grep -iv "^* feat:\|^* fix:" | sed "s||\(.*\)| ([\`\1\`](https://github.com/${REPO}/commit/\1))|")
 
           if [ -n "$FEATURES" ]; then
             echo "### Features" >> $GITHUB_OUTPUT
