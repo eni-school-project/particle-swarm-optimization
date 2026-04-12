@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://chexux77g0ppm"]
 
-[ext_resource type="Texture2D" uid="uid://bl2dup7bxi50d" path="res://assets/target.png" id="1_b37e2"]
+[ext_resource type="Texture2D" uid="uid://bb4idon7qccbo" path="res://assets/images/target.png" id="1_b37e2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b5a2r"]
 radius = 8.0
