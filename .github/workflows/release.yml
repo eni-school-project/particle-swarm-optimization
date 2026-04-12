@@ -59,7 +59,7 @@ jobs:
             git log --pretty=format:"%s|%h" "$RANGE" > "$LOG_FILE"
 
             format_commits() {
-              sed -E 's/^(.*)\|([a-f0-9]+)$/- \1 ([`\2`](https:\/\/github.com\/${{ github.repository }}\/commit\/\2))/'
+              sed -E 's#^(.*)\|([a-f0-9]+)$#- \1 ([`\2`](https://github.com/${{ github.repository }}/commit/\2))#'
             }
 
             print_section() {
