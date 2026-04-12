@@ -1,6 +1,172 @@
-[gd_scene load_steps=2 format=3 uid="uid://bcm7u8ay8d1dk"]
+[gd_scene load_steps=11 format=3 uid="uid://bcm7u8ay8d1dk"]
 
 [ext_resource type="Script" uid="uid://7mae2jotvq2v" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="Theme" uid="uid://k4akd3snvkkv" path="res://assets/themes/bold-font.tres" id="2_272bh"]
+[ext_resource type="Texture2D" uid="uid://bqrqsr3vqr1eh" path="res://assets/icons/arrow--right.svg" id="3_7mycd"]
+[ext_resource type="Theme" uid="uid://b6w1taxwhthyh" path="res://assets/themes/semi-bold-font.tres" id="3_272bh"]
+[ext_resource type="Texture2D" uid="uid://bbhnnnjdvkq2r" path="res://assets/icons/settings.svg" id="4_272bh"]
+[ext_resource type="Texture2D" uid="uid://wyow1gf7nqsj" path="res://assets/icons/exit.svg" id="5_5vw27"]
+[ext_resource type="Texture2D" uid="uid://chgx4h7yu7um0" path="res://assets/icons/logo--github.svg" id="6_kek77"]
 
-[node name="Main" type="Node2D"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_272bh"]
+content_margin_left = 10.0
+draw_center = false
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kek77"]
+content_margin_left = 10.0
+bg_color = Color(0.8786795, 0.87866855, 0.897929, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5vw27"]
+content_margin_left = 10.0
+bg_color = Color(0.9019608, 0.9019608, 0.91764706, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_ig7tw")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.95686275, 0.95686275, 0.972549, 1)
+
+[node name="RootContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="RootContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RootContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.5
+theme_override_constants/separation = 40
+
+[node name="Title" type="RichTextLabel" parent="RootContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+theme = ExtResource("2_272bh")
+theme_override_colors/default_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/bold_font_size = 40
+bbcode_enabled = true
+text = "[b]Optimisation par Essaims Particulaires[/b]"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Buttons" type="VBoxContainer" parent="RootContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Resolve" type="Button" parent="RootContainer/HBoxContainer/VBoxContainer/Buttons"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("3_272bh")
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_focus_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_pressed_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_hover_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_constants/icon_max_width = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_272bh")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kek77")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5vw27")
+text = "Résoudre"
+icon = ExtResource("3_7mycd")
+
+[node name="Options" type="Button" parent="RootContainer/HBoxContainer/VBoxContainer/Buttons"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("3_272bh")
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_focus_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_pressed_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_hover_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_constants/icon_max_width = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_272bh")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kek77")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5vw27")
+text = "Options"
+icon = ExtResource("4_272bh")
+
+[node name="Github" type="Button" parent="RootContainer/HBoxContainer/VBoxContainer/Buttons"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("3_272bh")
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_focus_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_pressed_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_hover_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_constants/icon_max_width = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_272bh")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kek77")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5vw27")
+text = "Github"
+icon = ExtResource("6_kek77")
+
+[node name="Quit" type="Button" parent="RootContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("3_272bh")
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_focus_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_pressed_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_hover_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_constants/icon_max_width = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_272bh")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kek77")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5vw27")
+text = "Quitter"
+icon = ExtResource("5_5vw27")
+
+[node name="MarginContainer" type="MarginContainer" parent="RootContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
+
+[node name="ColorRect" type="ColorRect" parent="RootContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+color = Color(0.54619163, 0.58930475, 0.7000541, 1)
