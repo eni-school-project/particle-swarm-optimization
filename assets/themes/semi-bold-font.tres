@@ -1,0 +1,14 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://b6w1taxwhthyh"]
+
+[ext_resource type="FontFile" uid="uid://dxierqni25435" path="res://assets/fonts/SpaceGrotesk-VariableFont_wght.ttf" id="1_ukwbe"]
+
+[sub_resource type="FontVariation" id="FontVariation_7egdk"]
+base_font = ExtResource("1_ukwbe")
+variation_opentype = {
+2003265652: 500
+}
+
+[resource]
+default_font = SubResource("FontVariation_7egdk")
+default_font_size = 16
+Button/colors/font_color = Color(0.95686275, 0.95686275, 0.972549, 1)
