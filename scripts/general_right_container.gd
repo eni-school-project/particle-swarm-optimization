@@ -98,27 +98,28 @@ func reset_pso() -> void:
 
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if event is InputEventMouseButton:
-		
-		if (event.button_index == MOUSE_BUTTON_LEFT) and event.pressed:
-			if get_tree().has_group("target"):
-				var target: Area2D = get_tree().get_first_node_in_group("target") as Area2D
-				target.global_position = get_global_mouse_position()
+	if get_tree().has_group("particles"):
+		if event is InputEventMouseButton:
+			
+			if (event.button_index == MOUSE_BUTTON_LEFT) and event.pressed:
+				if get_tree().has_group("target"):
+					var target: Area2D = get_tree().get_first_node_in_group("target") as Area2D
+					target.global_position = get_global_mouse_position()
 
-				reset_pso()
+					reset_pso()
 
-			else:
-				var target: Area2D = target_scene.instantiate()
-				target.add_to_group("target")
-				add_child(target)
+				else:
+					var target: Area2D = target_scene.instantiate()
+					target.add_to_group("target")
+					add_child(target)
 
-				target.global_position = get_global_mouse_position()
-				move_child(target, $Particles.get_index())
+					target.global_position = get_global_mouse_position()
+					move_child(target, $Particles.get_index())
 
-				_set_particles_target(true)
+					_set_particles_target(true)
 
-		elif (event.button_index == MOUSE_BUTTON_RIGHT) and event.pressed:
-			if get_tree().has_group("target"):
-				var target: Area2D = get_tree().get_first_node_in_group("target") as Area2D
-				target.queue_free()
-				_set_particles_target(false)
+			elif (event.button_index == MOUSE_BUTTON_RIGHT) and event.pressed:
+				if get_tree().has_group("target"):
+					var target: Area2D = get_tree().get_first_node_in_group("target") as Area2D
+					target.queue_free()
+					_set_particles_target(false)
