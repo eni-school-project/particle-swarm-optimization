@@ -1,4 +1,4 @@
-extends Node2D
+extends MarginContainer
 
 @export var particle_number: int = 8
 @export var particle_scene: PackedScene
@@ -69,10 +69,10 @@ func pso(particles: Array[Particle], _delta: float) -> void:
 	var target_position: Vector2 = target.global_position
 	
 	for particle in particles:
-		var distance: float = particle.position.distance_to(target_position)
+		var distance: float = particle.global_position.distance_to(target_position)
 		if (distance < particle.best_distance):
 			particle.best_distance = distance
-			particle.objective = particle.position
+			particle.objective = particle.global_position
 	
 	for particle in particles:
 		if (particle.best_distance < global_best_distance):
@@ -81,8 +81,8 @@ func pso(particles: Array[Particle], _delta: float) -> void:
 	
 	for particle in particles:
 		particle.velocity = randf_range(1.0, 2.0) * particle.velocity \
-			+ exploration * randf() * (particle.objective - particle.position) \
-			+ exploitation * randf() * (global_objective - particle.position)
+			+ exploration * randf() * (particle.objective - particle.global_position) \
+			+ exploitation * randf() * (global_objective - particle.global_position)
 
 
 func reset_pso() -> void:
@@ -94,7 +94,7 @@ func reset_pso() -> void:
 		if node is Particle:
 			var particle := node as Particle
 			particle.best_distance = INF
-			particle.objective = particle.position
+			particle.objective = particle.global_position
 
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
@@ -104,19 +104,19 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 			if get_tree().has_group("target"):
 				var target: Area2D = get_tree().get_first_node_in_group("target") as Area2D
 				target.global_position = get_global_mouse_position()
-				
+
 				reset_pso()
-			
+
 			else:
 				var target: Area2D = target_scene.instantiate()
 				target.add_to_group("target")
 				add_child(target)
-				
+
 				target.global_position = get_global_mouse_position()
 				move_child(target, $Particles.get_index())
-				
+
 				_set_particles_target(true)
-		
+
 		elif (event.button_index == MOUSE_BUTTON_RIGHT) and event.pressed:
 			if get_tree().has_group("target"):
 				var target: Area2D = get_tree().get_first_node_in_group("target") as Area2D

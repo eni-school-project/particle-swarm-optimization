@@ -61,20 +61,36 @@ grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="RootContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="LeftContainer" type="MarginContainer" parent="RootContainer/HBoxContainer"]
+z_index = 2
 custom_minimum_size = Vector2(0, 364)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 size_flags_stretch_ratio = 0.5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer"]
+[node name="BackgroundContainer" type="MarginContainer" parent="RootContainer/HBoxContainer/LeftContainer"]
+layout_mode = 2
+
+[node name="Background" type="ColorRect" parent="RootContainer/HBoxContainer/LeftContainer/BackgroundContainer"]
+layout_mode = 2
+mouse_filter = 1
+color = Color(0.95686275, 0.95686275, 0.972549, 1)
+
+[node name="ForegroundContainer" type="MarginContainer" parent="RootContainer/HBoxContainer/LeftContainer"]
+custom_minimum_size = Vector2(0, 364)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/margin_right = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 40
 
-[node name="Title" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/VBoxContainer"]
+[node name="Title" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
 theme = ExtResource("2_272bh")
@@ -88,18 +104,18 @@ scroll_active = false
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="RootContainer/HBoxContainer/LeftContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Menu" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer"]
+[node name="Menu" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 40
 
-[node name="Buttons" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/Menu"]
+[node name="Buttons" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/Menu"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Resolve" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/Menu/Buttons"]
+[node name="Resolve" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/Menu/Buttons"]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -118,7 +134,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_5vw27")
 text = "Résoudre"
 icon = ExtResource("3_7mycd")
 
-[node name="Options" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/Menu/Buttons"]
+[node name="Options" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/Menu/Buttons"]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -137,7 +153,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_5vw27")
 text = "Options"
 icon = ExtResource("4_272bh")
 
-[node name="Github" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/Menu/Buttons"]
+[node name="Github" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/Menu/Buttons"]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -156,7 +172,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_5vw27")
 text = "Github"
 icon = ExtResource("6_kek77")
 
-[node name="Quit" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/Menu"]
+[node name="Quit" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/Menu"]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -175,12 +191,12 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_5vw27")
 text = "Quitter"
 icon = ExtResource("5_5vw27")
 
-[node name="SubMenu" type="HBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer"]
+[node name="SubMenu" type="HBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 5
 alignment = 2
 
-[node name="Back" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/SubMenu"]
+[node name="Back" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/SubMenu"]
 custom_minimum_size = Vector2(50, 40)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -198,11 +214,11 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_kek77")
 theme_override_styles/hover = SubResource("StyleBoxFlat_5vw27")
 icon = ExtResource("8_5vw27")
 
-[node name="Buttons" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/SubMenu"]
+[node name="Buttons" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/SubMenu"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Point" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/SubMenu/Buttons"]
+[node name="Point" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/SubMenu/Buttons"]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -218,9 +234,9 @@ theme_override_constants/icon_max_width = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_272bh")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_kek77")
 theme_override_styles/hover = SubResource("StyleBoxFlat_5vw27")
-text = "Simple critère"
+text = "Général"
 
-[node name="Maison" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/SubMenu/Buttons"]
+[node name="Maison" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/SubMenu/Buttons"]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -236,19 +252,19 @@ theme_override_constants/icon_max_width = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_272bh")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_kek77")
 theme_override_styles/hover = SubResource("StyleBoxFlat_5vw27")
-text = "Double critère"
+text = "Spécifique"
 
 [node name="RightContainer" type="MarginContainer" parent="RootContainer/HBoxContainer"]
+z_index = 1
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/margin_left = 16
 
 [node name="ColorRect" type="ColorRect" parent="RootContainer/HBoxContainer/RightContainer"]
 layout_mode = 2
-color = Color(0.54619163, 0.58930475, 0.7000541, 1)
+color = Color(0.95686275, 0.95686275, 0.972549, 1)
 
-[connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/Menu/Buttons/Resolve" to="." method="_on_resolve_pressed"]
-[connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/Menu/Buttons/Github" to="." method="_on_github_pressed"]
-[connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/Menu/Quit" to="." method="_on_quit_pressed"]
-[connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/SubMenu/Back" to="." method="_on_back_pressed"]
-[connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/SubMenu/Buttons/Point" to="." method="_on_point_pressed"]
+[connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/Menu/Buttons/Resolve" to="." method="_on_resolve_pressed"]
+[connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/Menu/Buttons/Github" to="." method="_on_github_pressed"]
+[connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/Menu/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/SubMenu/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/SubMenu/Buttons/Point" to="." method="_on_point_pressed"]
