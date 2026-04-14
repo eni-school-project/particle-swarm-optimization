@@ -69,10 +69,10 @@ func pso(particles: Array[Particle], _delta: float) -> void:
 	var target_position: Vector2 = target.global_position
 	
 	for particle in particles:
-		var distance: float = particle.position.distance_to(target_position)
+		var distance: float = particle.global_position.distance_to(target_position)
 		if (distance < particle.best_distance):
 			particle.best_distance = distance
-			particle.objective = particle.position
+			particle.objective = particle.global_position
 	
 	for particle in particles:
 		if (particle.best_distance < global_best_distance):
@@ -81,8 +81,8 @@ func pso(particles: Array[Particle], _delta: float) -> void:
 	
 	for particle in particles:
 		particle.velocity = randf_range(1.0, 2.0) * particle.velocity \
-			+ exploration * randf() * (particle.objective - particle.position) \
-			+ exploitation * randf() * (global_objective - particle.position)
+			+ exploration * randf() * (particle.objective - particle.global_position) \
+			+ exploitation * randf() * (global_objective - particle.global_position)
 
 
 func reset_pso() -> void:
@@ -94,7 +94,7 @@ func reset_pso() -> void:
 		if node is Particle:
 			var particle := node as Particle
 			particle.best_distance = INF
-			particle.objective = particle.position
+			particle.objective = particle.global_position
 
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
