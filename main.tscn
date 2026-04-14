@@ -61,6 +61,7 @@ grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="RootContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="LeftContainer" type="MarginContainer" parent="RootContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 364)
@@ -218,7 +219,7 @@ theme_override_constants/icon_max_width = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_272bh")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_kek77")
 theme_override_styles/hover = SubResource("StyleBoxFlat_5vw27")
-text = "Simple critère"
+text = "Général"
 
 [node name="Maison" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/SubMenu/Buttons"]
 custom_minimum_size = Vector2(150, 40)
@@ -236,16 +237,15 @@ theme_override_constants/icon_max_width = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_272bh")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_kek77")
 theme_override_styles/hover = SubResource("StyleBoxFlat_5vw27")
-text = "Double critère"
+text = "Spécifique"
 
 [node name="RightContainer" type="MarginContainer" parent="RootContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/margin_left = 16
 
 [node name="ColorRect" type="ColorRect" parent="RootContainer/HBoxContainer/RightContainer"]
 layout_mode = 2
-color = Color(0.54619163, 0.58930475, 0.7000541, 1)
+color = Color(0.95686275, 0.95686275, 0.972549, 1)
 
 [connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/Menu/Buttons/Resolve" to="." method="_on_resolve_pressed"]
 [connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/Menu/Buttons/Github" to="." method="_on_github_pressed"]
