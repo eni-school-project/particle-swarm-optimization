@@ -1,10 +1,36 @@
-[gd_scene load_steps=7 format=3 uid="uid://cu0nst35jowyr"]
+[gd_scene load_steps=12 format=3 uid="uid://cu0nst35jowyr"]
 
 [ext_resource type="Script" uid="uid://cbayu6m1rn2me" path="res://scripts/general.gd" id="1_dlqvt"]
 [ext_resource type="Theme" uid="uid://k4akd3snvkkv" path="res://assets/themes/bold-font.tres" id="2_oe3oi"]
+[ext_resource type="Theme" uid="uid://b6w1taxwhthyh" path="res://assets/themes/semi-bold-font.tres" id="3_fdh1j"]
 [ext_resource type="Script" uid="uid://dk0owmgi3l2bk" path="res://scripts/general_right_container.gd" id="3_pduxd"]
+[ext_resource type="Texture2D" uid="uid://cyahngk1d2gqr" path="res://assets/icons/checkmark.svg" id="4_7h5e4"]
 [ext_resource type="PackedScene" uid="uid://g0y4ikyj8fsi" path="res://scenes/particle.tscn" id="4_gy7hs"]
 [ext_resource type="PackedScene" uid="uid://chexux77g0ppm" path="res://scenes/target.tscn" id="5_fdh1j"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oe3oi"]
+content_margin_left = 10.0
+draw_center = false
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cxwob"]
+content_margin_left = 10.0
+bg_color = Color(0.8786795, 0.87866855, 0.897929, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dfvab"]
+content_margin_left = 10.0
+bg_color = Color(0.9019608, 0.9019608, 0.91764706, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2p8t7"]
 size = Vector2(911, 768)
@@ -63,23 +89,157 @@ size_flags_vertical = 4
 theme_override_constants/margin_right = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer"]
+custom_minimum_size = Vector2(0, 364)
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 40
 
 [node name="Title" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer"]
-custom_minimum_size = Vector2(200, 100)
+custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme = ExtResource("2_oe3oi")
 theme_override_colors/default_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
 theme_override_font_sizes/normal_font_size = 40
 theme_override_font_sizes/bold_font_size = 40
 bbcode_enabled = true
-text = "[b]Optimisation par Essaims Particulaires[/b]"
+text = "[b]Cas général[/b]"
 fit_content = true
 scroll_active = false
+shortcut_keys_enabled = false
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="FirstRow" type="HBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 24
+
+[node name="ParticleNumber" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow"]
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/ParticleNumber"]
+layout_mode = 2
+theme = ExtResource("2_oe3oi")
+theme_override_colors/default_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+bbcode_enabled = true
+text = "[b]Particules[/b]"
+fit_content = true
+scroll_active = false
+
+[node name="Value" type="SpinBox" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/ParticleNumber"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+theme = ExtResource("2_oe3oi")
+theme_override_colors/up_icon_modulate = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/up_disabled_icon_modulate = Color(0.9019608, 0.9019608, 0.91764706, 1)
+theme_override_colors/down_icon_modulate = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/down_disabled_icon_modulate = Color(0.9019608, 0.9019608, 0.91764706, 1)
+min_value = 2.0
+value = 2.0
+
+[node name="Inertia" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow"]
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia"]
+layout_mode = 2
+theme = ExtResource("2_oe3oi")
+theme_override_colors/default_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+bbcode_enabled = true
+text = "[b]Coefficient d'inertie[/b]"
+fit_content = true
+scroll_active = false
+
+[node name="Value" type="SpinBox" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+theme = ExtResource("2_oe3oi")
+theme_override_colors/up_icon_modulate = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/up_disabled_icon_modulate = Color(0.9019608, 0.9019608, 0.91764706, 1)
+theme_override_colors/down_icon_modulate = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/down_disabled_icon_modulate = Color(0.9019608, 0.9019608, 0.91764706, 1)
+min_value = 0.1
+max_value = 1.0
+step = 0.1
+value = 0.4
+
+[node name="SecondRow" type="HBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 24
+
+[node name="Exploration" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow"]
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow/Exploration"]
+layout_mode = 2
+theme = ExtResource("2_oe3oi")
+theme_override_colors/default_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+bbcode_enabled = true
+text = "[b]Exploration[/b]"
+fit_content = true
+scroll_active = false
+
+[node name="Value" type="SpinBox" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow/Exploration"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+theme = ExtResource("2_oe3oi")
+theme_override_colors/up_icon_modulate = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/up_disabled_icon_modulate = Color(0.9019608, 0.9019608, 0.91764706, 1)
+theme_override_colors/down_icon_modulate = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/down_disabled_icon_modulate = Color(0.9019608, 0.9019608, 0.91764706, 1)
+max_value = 1.0
+step = 0.1
+value = 1.0
+
+[node name="Exploitation" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow"]
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow/Exploitation"]
+layout_mode = 2
+theme = ExtResource("2_oe3oi")
+theme_override_colors/default_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+bbcode_enabled = true
+text = "[b]Exploitation[/b]"
+fit_content = true
+scroll_active = false
+
+[node name="Value" type="SpinBox" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow/Exploitation"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+theme = ExtResource("2_oe3oi")
+theme_override_colors/up_icon_modulate = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/up_disabled_icon_modulate = Color(0.9019608, 0.9019608, 0.91764706, 1)
+theme_override_colors/down_icon_modulate = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/down_disabled_icon_modulate = Color(0.9019608, 0.9019608, 0.91764706, 1)
+max_value = 1.0
+step = 0.1
+value = 1.0
+
+[node name="Confirm" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("3_fdh1j")
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_focus_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_pressed_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_hover_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_constants/icon_max_width = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_oe3oi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_cxwob")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dfvab")
+text = "Confirmer"
+icon = ExtResource("4_7h5e4")
 
 [node name="RightContainer" type="MarginContainer" parent="RootContainer/HBoxContainer"]
 z_index = 1
@@ -92,7 +252,7 @@ target_scene = ExtResource("5_fdh1j")
 [node name="ColorRect" type="ColorRect" parent="RootContainer/HBoxContainer/RightContainer"]
 layout_mode = 2
 mouse_filter = 1
-color = Color(0.53333336, 0.3137255, 0.3254902, 1)
+color = Color(0.12156863, 0.28235295, 0.49411765, 1)
 
 [node name="Area2D" type="Area2D" parent="RootContainer/HBoxContainer/RightContainer"]
 
