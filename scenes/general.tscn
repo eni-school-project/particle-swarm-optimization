@@ -1,0 +1,90 @@
+[gd_scene load_steps=7 format=3 uid="uid://cu0nst35jowyr"]
+
+[ext_resource type="Script" uid="uid://cbayu6m1rn2me" path="res://scripts/general.gd" id="1_dlqvt"]
+[ext_resource type="Theme" uid="uid://k4akd3snvkkv" path="res://assets/themes/bold-font.tres" id="2_oe3oi"]
+[ext_resource type="Script" uid="uid://dk0owmgi3l2bk" path="res://scripts/general_right_container.gd" id="3_pduxd"]
+[ext_resource type="PackedScene" uid="uid://g0y4ikyj8fsi" path="res://scenes/particle.tscn" id="4_gy7hs"]
+[ext_resource type="PackedScene" uid="uid://chexux77g0ppm" path="res://scenes/target.tscn" id="5_fdh1j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2p8t7"]
+size = Vector2(898, 768)
+
+[node name="General" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_dlqvt")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.95686275, 0.95686275, 0.972549, 1)
+
+[node name="RootContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="RootContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="LeftContainer" type="MarginContainer" parent="RootContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 364)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 40
+
+[node name="Title" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+theme = ExtResource("2_oe3oi")
+theme_override_colors/default_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/bold_font_size = 40
+bbcode_enabled = true
+text = "[b]Optimisation par Essaims Particulaires[/b]"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="RightContainer" type="MarginContainer" parent="RootContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("3_pduxd")
+particle_scene = ExtResource("4_gy7hs")
+target_scene = ExtResource("5_fdh1j")
+
+[node name="ColorRect" type="ColorRect" parent="RootContainer/HBoxContainer/RightContainer"]
+layout_mode = 2
+mouse_filter = 1
+color = Color(0.53333336, 0.3137255, 0.3254902, 1)
+
+[node name="Area2D" type="Area2D" parent="RootContainer/HBoxContainer/RightContainer"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RootContainer/HBoxContainer/RightContainer/Area2D"]
+position = Vector2(449, 384)
+shape = SubResource("RectangleShape2D_2p8t7")
+
+[node name="Particles" type="Node2D" parent="RootContainer/HBoxContainer/RightContainer"]
+
+[connection signal="input_event" from="RootContainer/HBoxContainer/RightContainer/Area2D" to="RootContainer/HBoxContainer/RightContainer" method="_on_area_2d_input_event"]
