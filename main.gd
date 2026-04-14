@@ -1,7 +1,7 @@
 extends Control
 
-@onready var menu := $RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/Menu
-@onready var sub_menu := $RootContainer/HBoxContainer/LeftContainer/VBoxContainer/MarginContainer/SubMenu
+@onready var menu := $RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/Menu
+@onready var sub_menu := $RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/SubMenu
 
 const SLIDE_AMOUNT := 100.0
 const DURATION := 0.4

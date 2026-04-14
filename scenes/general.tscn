@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://chexux77g0ppm" path="res://scenes/target.tscn" id="5_fdh1j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2p8t7"]
-size = Vector2(898, 768)
+size = Vector2(911, 768)
 
 [node name="General" type="Control"]
 layout_mode = 3
@@ -39,21 +39,35 @@ grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="RootContainer"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 0
 
 [node name="LeftContainer" type="MarginContainer" parent="RootContainer/HBoxContainer"]
+z_index = 2
 custom_minimum_size = Vector2(0, 364)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 4
 size_flags_stretch_ratio = 0.5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer"]
+[node name="BackgroundContainer" type="MarginContainer" parent="RootContainer/HBoxContainer/LeftContainer"]
+layout_mode = 2
+
+[node name="Background" type="ColorRect" parent="RootContainer/HBoxContainer/LeftContainer/BackgroundContainer"]
+layout_mode = 2
+mouse_filter = 1
+color = Color(0.95686275, 0.95686275, 0.972549, 1)
+
+[node name="ForegroundContainer" type="MarginContainer" parent="RootContainer/HBoxContainer/LeftContainer"]
+custom_minimum_size = Vector2(0, 364)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/margin_right = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 40
 
-[node name="Title" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/VBoxContainer"]
+[node name="Title" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
 theme = ExtResource("2_oe3oi")
@@ -68,6 +82,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="RightContainer" type="MarginContainer" parent="RootContainer/HBoxContainer"]
+z_index = 1
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("3_pduxd")
@@ -82,7 +97,7 @@ color = Color(0.53333336, 0.3137255, 0.3254902, 1)
 [node name="Area2D" type="Area2D" parent="RootContainer/HBoxContainer/RightContainer"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RootContainer/HBoxContainer/RightContainer/Area2D"]
-position = Vector2(449, 384)
+position = Vector2(455.5, 384)
 shape = SubResource("RectangleShape2D_2p8t7")
 
 [node name="Particles" type="Node2D" parent="RootContainer/HBoxContainer/RightContainer"]
