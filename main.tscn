@@ -86,12 +86,13 @@ size_flags_vertical = 4
 theme_override_constants/margin_right = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer"]
+custom_minimum_size = Vector2(0, 364)
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 40
 
 [node name="Title" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer"]
-custom_minimum_size = Vector2(200, 100)
+custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme = ExtResource("2_272bh")
 theme_override_colors/default_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
@@ -101,6 +102,7 @@ bbcode_enabled = true
 text = "[b]Optimisation par Essaims Particulaires[/b]"
 fit_content = true
 scroll_active = false
+shortcut_keys_enabled = false
 horizontal_alignment = 2
 vertical_alignment = 1
 
