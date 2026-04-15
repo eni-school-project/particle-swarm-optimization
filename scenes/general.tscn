@@ -142,7 +142,7 @@ theme_override_colors/up_disabled_icon_modulate = Color(0.9019608, 0.9019608, 0.
 theme_override_colors/down_icon_modulate = Color(0.02745098, 0.03529412, 0.05882353, 1)
 theme_override_colors/down_disabled_icon_modulate = Color(0.9019608, 0.9019608, 0.91764706, 1)
 min_value = 2.0
-value = 2.0
+value = 8.0
 
 [node name="Inertia" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow"]
 layout_mode = 2
@@ -262,4 +262,9 @@ shape = SubResource("RectangleShape2D_2p8t7")
 
 [node name="Particles" type="Node2D" parent="RootContainer/HBoxContainer/RightContainer"]
 
+[connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/ParticleNumber/Value" to="RootContainer/HBoxContainer/RightContainer" method="_on_particle_value_changed"]
+[connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/Value" to="RootContainer/HBoxContainer/RightContainer" method="_on_inertia_value_changed"]
+[connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow/Exploration/Value" to="RootContainer/HBoxContainer/RightContainer" method="_on_exploration_value_changed"]
+[connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow/Exploitation/Value" to="RootContainer/HBoxContainer/RightContainer" method="_on_exploitation_value_changed"]
+[connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/Confirm" to="RootContainer/HBoxContainer/RightContainer" method="_on_confirm_pressed"]
 [connection signal="input_event" from="RootContainer/HBoxContainer/RightContainer/Area2D" to="RootContainer/HBoxContainer/RightContainer" method="_on_area_2d_input_event"]
