@@ -11,8 +11,8 @@ var wander_timer: float = 0.0
 var has_target: bool = false
 var is_decelerating: bool = false
 
-var objective: Vector2 = Vector2.ZERO
-var best_distance: float = INF
+var personal_best_position: Vector2 = Vector2.ZERO
+var personal_best_distance: float = INF
 
 func _physics_process(delta: float) -> void:
 	move_and_slide()

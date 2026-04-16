@@ -12,7 +12,7 @@ extends MarginContainer
 
 var screen_size: Vector2
 
-var global_objective: Vector2 = Vector2.ZERO
+var global_best_position: Vector2 = Vector2.ZERO
 var global_best_distance: float = INF
 
 func _ready() -> void:
@@ -70,31 +70,31 @@ func pso(particles: Array[Particle], _delta: float) -> void:
 	
 	for particle in particles:
 		var distance: float = particle.global_position.distance_to(target_position)
-		if (distance < particle.best_distance):
-			particle.best_distance = distance
-			particle.objective = particle.global_position
+		if (distance < particle.personal_best_distance):
+			particle.personal_best_distance = distance
+			particle.personal_best_position = particle.global_position
 	
 	for particle in particles:
-		if (particle.best_distance < global_best_distance):
-			global_best_distance = particle.best_distance
-			global_objective = particle.objective
+		if (particle.personal_best_distance < global_best_distance):
+			global_best_distance = particle.personal_best_distance
+			global_best_position = particle.personal_best_position
 	
 	for particle in particles:
 		particle.velocity = inertia * particle.velocity \
-			+ exploration * randf() * (particle.objective - particle.global_position) \
-			+ exploitation * randf() * (global_objective - particle.global_position)
+			+ exploration * randf() * (particle.personal_best_position - particle.global_position) \
+			+ exploitation * randf() * (global_best_position - particle.global_position)
 
 
 func reset_pso() -> void:
 	global_best_distance = INF
-	global_objective = Vector2.ZERO
+	global_best_position = Vector2.ZERO
 	
 	var source: Array[Node] = get_tree().get_nodes_in_group("particles")
 	for node in source:
 		if node is Particle:
 			var particle := node as Particle
-			particle.best_distance = INF
-			particle.objective = particle.global_position
+			particle.personal_best_distance = INF
+			particle.personal_best_position = particle.global_position
 
 
 func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
