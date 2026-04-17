@@ -6,8 +6,8 @@ extends MarginContainer
 
 @export var exploration: float = 1.0
 @export var exploitation: float = 1.0
-#@export var min_inertia: float = 0.4
-#@export var max_inertia: float = 0.9
+@export var min_inertia: float = 0.4
+@export var max_inertia: float = 2.0
 @export var inertia: float = 0.4
 
 var screen_size: Vector2
@@ -80,7 +80,7 @@ func pso(particles: Array[Particle], _delta: float) -> void:
 			global_best_position = particle.personal_best_position
 	
 	for particle in particles:
-		particle.velocity = inertia * particle.velocity \
+		particle.velocity = randf_range(min_inertia, max_inertia) * particle.velocity \
 			+ exploration * randf() * (particle.personal_best_position - particle.global_position) \
 			+ exploitation * randf() * (global_best_position - particle.global_position)
 
