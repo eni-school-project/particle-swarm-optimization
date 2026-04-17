@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bcm7u8ay8d1dk"]
+[gd_scene load_steps=15 format=3 uid="uid://bcm7u8ay8d1dk"]
 
 [ext_resource type="Script" uid="uid://7mae2jotvq2v" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="Theme" uid="uid://k4akd3snvkkv" path="res://assets/themes/bold-font.tres" id="2_272bh"]
@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bbhnnnjdvkq2r" path="res://assets/icons/settings.svg" id="4_272bh"]
 [ext_resource type="Texture2D" uid="uid://wyow1gf7nqsj" path="res://assets/icons/exit.svg" id="5_5vw27"]
 [ext_resource type="Texture2D" uid="uid://chgx4h7yu7um0" path="res://assets/icons/logo--github.svg" id="6_kek77"]
-[ext_resource type="Texture2D" uid="uid://b4dj6bnpvfjdf" path="res://assets/icons/arrow--left.svg" id="8_5vw27"]
+[ext_resource type="Texture2D" uid="uid://dld2nifddwin0" path="res://assets/icons/close.svg" id="8_5vw27"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_272bh"]
 content_margin_left = 10.0
@@ -27,6 +27,27 @@ corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5vw27"]
 content_margin_left = 10.0
+bg_color = Color(0.9019608, 0.9019608, 0.91764706, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4c57u"]
+draw_center = false
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_efxa6"]
+bg_color = Color(0.8786795, 0.87866855, 0.897929, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dg77c"]
 bg_color = Color(0.9019608, 0.9019608, 0.91764706, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
@@ -221,7 +242,7 @@ layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="Point" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/SubMenu/Buttons"]
-custom_minimum_size = Vector2(150, 40)
+custom_minimum_size = Vector2(125, 40)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
@@ -232,14 +253,13 @@ theme_override_colors/font_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
 theme_override_colors/font_focus_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
 theme_override_colors/font_pressed_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
 theme_override_colors/font_hover_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
-theme_override_constants/icon_max_width = 32
-theme_override_styles/normal = SubResource("StyleBoxFlat_272bh")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kek77")
-theme_override_styles/hover = SubResource("StyleBoxFlat_5vw27")
+theme_override_styles/normal = SubResource("StyleBoxFlat_4c57u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_efxa6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dg77c")
 text = "Général"
 
 [node name="Maison" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/SubMenu/Buttons"]
-custom_minimum_size = Vector2(150, 40)
+custom_minimum_size = Vector2(125, 40)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
@@ -250,10 +270,9 @@ theme_override_colors/font_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
 theme_override_colors/font_focus_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
 theme_override_colors/font_pressed_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
 theme_override_colors/font_hover_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
-theme_override_constants/icon_max_width = 32
-theme_override_styles/normal = SubResource("StyleBoxFlat_272bh")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kek77")
-theme_override_styles/hover = SubResource("StyleBoxFlat_5vw27")
+theme_override_styles/normal = SubResource("StyleBoxFlat_4c57u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_efxa6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dg77c")
 text = "Spécifique"
 
 [node name="RightContainer" type="MarginContainer" parent="RootContainer/HBoxContainer"]
