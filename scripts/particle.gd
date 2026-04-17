@@ -34,11 +34,11 @@ func _physics_process(delta: float) -> void:
 				velocity += random_nudge
 				wander_timer = change_direction_every
 			
-			var viewport = get_viewport_rect()
-			if (position.x < 0): position.x = viewport.size.x
-			elif (position.x > viewport.size.x): position.x = 0
-			if (position.y < 0): position.y = viewport.size.y
-			elif (position.y > viewport.size.y): position.y = 0
+			#var viewport = get_viewport_rect()
+			#if (position.x < 0): position.x = viewport.size.x
+			#elif (position.x > viewport.size.x): position.x = 0
+			#if (position.y < 0): position.y = viewport.size.y
+			#elif (position.y > viewport.size.y): position.y = 0
 
 
 func set_target(value: bool) -> void:
