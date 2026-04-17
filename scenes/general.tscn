@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cu0nst35jowyr"]
+[gd_scene load_steps=15 format=3 uid="uid://cu0nst35jowyr"]
 
 [ext_resource type="Script" uid="uid://cbayu6m1rn2me" path="res://scripts/general.gd" id="1_dlqvt"]
 [ext_resource type="Theme" uid="uid://k4akd3snvkkv" path="res://assets/themes/bold-font.tres" id="2_oe3oi"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://cyahngk1d2gqr" path="res://assets/icons/checkmark.svg" id="4_7h5e4"]
 [ext_resource type="PackedScene" uid="uid://g0y4ikyj8fsi" path="res://scenes/particle.tscn" id="4_gy7hs"]
 [ext_resource type="PackedScene" uid="uid://chexux77g0ppm" path="res://scenes/target.tscn" id="5_fdh1j"]
+[ext_resource type="Shader" uid="uid://dvmmklcgyo4o5" path="res://shaders/grid.gdshader" id="8_oe3oi"]
+[ext_resource type="Script" uid="uid://cc182k8kir54b" path="res://scripts/grid_rect.gd" id="9_cxwob"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oe3oi"]
 content_margin_left = 10.0
@@ -31,6 +33,14 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cxwob"]
+shader = ExtResource("8_oe3oi")
+shader_parameter/background_color = Color(0.5, 0.5, 0.5157, 1)
+shader_parameter/line_color = Color(0.65, 0.65, 0.65, 1)
+shader_parameter/grid_offset = Vector2(0, 0)
+shader_parameter/grid_spacing = 40.0
+shader_parameter/line_thickness = 0.75000003236512
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2p8t7"]
 size = Vector2(911, 768)
@@ -102,8 +112,7 @@ theme_override_colors/default_color = Color(0.02745098, 0.03529412, 0.05882353, 
 theme_override_font_sizes/normal_font_size = 40
 theme_override_font_sizes/bold_font_size = 40
 bbcode_enabled = true
-text = "
-[b]Cas général[/b]"
+text = "[b]Cas général[/b]"
 fit_content = true
 scroll_active = false
 shortcut_keys_enabled = false
@@ -250,10 +259,11 @@ script = ExtResource("3_pduxd")
 particle_scene = ExtResource("4_gy7hs")
 target_scene = ExtResource("5_fdh1j")
 
-[node name="ColorRect" type="ColorRect" parent="RootContainer/HBoxContainer/RightContainer"]
+[node name="GridRect" type="ColorRect" parent="RootContainer/HBoxContainer/RightContainer"]
+material = SubResource("ShaderMaterial_cxwob")
 layout_mode = 2
 mouse_filter = 1
-color = Color(0.12156863, 0.28235295, 0.49411765, 1)
+script = ExtResource("9_cxwob")
 
 [node name="Area2D" type="Area2D" parent="RootContainer/HBoxContainer/RightContainer"]
 
