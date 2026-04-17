@@ -181,6 +181,10 @@ func _on_start_pressed() -> void:
 		
 		generate_particles()
 	else:
+		var start_button: Button = $/root/General/RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/Start as Button
+		start_button.text = "Recommencer"
+		start_button.icon = load("res://assets/icons/rotate--360.svg")
+		
 		generate_particles()
 	
 	if get_tree().has_group("target"):
