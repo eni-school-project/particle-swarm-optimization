@@ -6,9 +6,11 @@ extends MarginContainer
 
 @export var exploration: float = 1.0
 @export var exploitation: float = 1.0
-@export var min_inertia: float = 0.4
+
+@export var min_inertia: float = 1.0
 @export var max_inertia: float = 2.0
 @export var inertia: float = 0.4
+var variable_inertia: bool = false
 
 var screen_size: Vector2
 
@@ -17,6 +19,7 @@ var global_best_distance: float = INF
 
 func _ready() -> void:
 	screen_size = get_viewport().get_visible_rect().size
+	($/root/General/RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer as HBoxContainer).hide()
 
 
 func _physics_process(delta: float) -> void:
@@ -80,7 +83,7 @@ func pso(particles: Array[Particle], _delta: float) -> void:
 			global_best_position = particle.personal_best_position
 	
 	for particle in particles:
-		particle.velocity = randf_range(min_inertia, max_inertia) * particle.velocity \
+		particle.velocity = (randf_range(min_inertia, max_inertia) if variable_inertia else inertia) * particle.velocity \
 			+ exploration * randf() * (particle.personal_best_position - particle.global_position) \
 			+ exploitation * randf() * (global_best_position - particle.global_position)
 
@@ -125,6 +128,22 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 					_set_particles_target(false)
 
 
+func _on_variable_inertia_toggle_toggled(toggled_on: bool) -> void:
+	variable_inertia = toggled_on
+	var container: MarginContainer = $/root/General/RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer as MarginContainer
+	
+	if toggled_on:
+		container.get_node("Value").set_process(false)
+		(container.get_node("Value") as SpinBox).hide()
+		container.get_node("HBoxContainer").set_process(true)
+		(container.get_node("HBoxContainer") as HBoxContainer).show()
+	else:
+		container.get_node("Value").set_process(true)
+		(container.get_node("Value") as SpinBox).show()
+		container.get_node("HBoxContainer").set_process(false)
+		(container.get_node("HBoxContainer") as HBoxContainer).hide()
+
+
 func _on_particle_value_changed(value: float) -> void:
 	var new_particle_count: int = int(value)
 	var current_particles: Array[Node] = get_tree().get_nodes_in_group("particles")
@@ -153,6 +172,14 @@ func _on_inertia_value_changed(value: float) -> void:
 	inertia = value
 
 
+func _on_min_inertia_value_value_changed(value: float) -> void:
+	min_inertia = value
+
+
+func _on_max_inertia_value_changed(value: float) -> void:
+	max_inertia = value
+
+
 func _on_exploration_value_changed(value: float) -> void:
 	exploration = value
 
@@ -166,7 +193,7 @@ func _on_start_pressed() -> void:
 	#var form_container: VBoxContainer = $/root/General/RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer
 	#
 	#var particle_number_form: SpinBox = form_container.get_node("FirstRow").get_node("ParticleNumber").get_node("Value") as SpinBox
-	#var inertia_form: SpinBox = form_container.get_node("FirstRow").get_node("Inertia").get_node("Value") as SpinBox
+	#var inertia_form: SpinBox = form_container.get_node("FirstRow").get_node("Inertia").get_node("MarginContainer").get_node("Value") as SpinBox
 	#var exploration_form: SpinBox = form_container.get_node("SecondRow").get_node("Exploration").get_node("Value") as SpinBox
 	#var exploitation_form: SpinBox = form_container.get_node("SecondRow").get_node("Exploitation").get_node("Value") as SpinBox
 	
