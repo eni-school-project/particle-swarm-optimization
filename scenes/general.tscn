@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cu0nst35jowyr"]
+[gd_scene load_steps=19 format=3 uid="uid://cu0nst35jowyr"]
 
 [ext_resource type="Script" uid="uid://cbayu6m1rn2me" path="res://scripts/general.gd" id="1_dlqvt"]
 [ext_resource type="Theme" uid="uid://k4akd3snvkkv" path="res://assets/themes/bold-font.tres" id="2_oe3oi"]
@@ -6,9 +6,34 @@
 [ext_resource type="Script" uid="uid://dk0owmgi3l2bk" path="res://scripts/general_right_container.gd" id="3_pduxd"]
 [ext_resource type="Texture2D" uid="uid://cyahngk1d2gqr" path="res://assets/icons/checkmark.svg" id="4_7h5e4"]
 [ext_resource type="PackedScene" uid="uid://g0y4ikyj8fsi" path="res://scenes/particle.tscn" id="4_gy7hs"]
+[ext_resource type="Texture2D" uid="uid://b4dj6bnpvfjdf" path="res://assets/icons/arrow--left.svg" id="5_dfvab"]
 [ext_resource type="PackedScene" uid="uid://chexux77g0ppm" path="res://scenes/target.tscn" id="5_fdh1j"]
 [ext_resource type="Shader" uid="uid://dvmmklcgyo4o5" path="res://shaders/grid.gdshader" id="8_oe3oi"]
 [ext_resource type="Script" uid="uid://cc182k8kir54b" path="res://scripts/grid_rect.gd" id="9_cxwob"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_omu6o"]
+content_margin_left = 10.0
+draw_center = false
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u3x02"]
+content_margin_left = 10.0
+bg_color = Color(0.8786795, 0.87866855, 0.897929, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pw15t"]
+content_margin_left = 10.0
+bg_color = Color(0.9019608, 0.9019608, 0.91764706, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oe3oi"]
 content_margin_left = 10.0
@@ -104,9 +129,33 @@ layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 40
 
-[node name="Title" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Back" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 40)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.3
+mouse_default_cursor_shape = 2
+theme = ExtResource("3_fdh1j")
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_focus_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_pressed_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_hover_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_constants/icon_max_width = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_omu6o")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_u3x02")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pw15t")
+icon = ExtResource("5_dfvab")
+
+[node name="Title" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
+size_flags_horizontal = 3
 theme = ExtResource("2_oe3oi")
 theme_override_colors/default_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
 theme_override_font_sizes/normal_font_size = 40
@@ -327,6 +376,7 @@ shape = SubResource("RectangleShape2D_2p8t7")
 
 [node name="Particles" type="Node2D" parent="RootContainer/HBoxContainer/RightContainer"]
 
+[connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/HBoxContainer/Back" to="." method="_on_back_pressed"]
 [connection signal="toggled" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VariableInertiaToggle" to="RootContainer/HBoxContainer/RightContainer" method="_on_variable_inertia_toggle_toggled"]
 [connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/ParticleNumber/Value" to="RootContainer/HBoxContainer/RightContainer" method="_on_particle_value_changed"]
 [connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/Value" to="RootContainer/HBoxContainer/RightContainer" method="_on_inertia_value_changed"]
