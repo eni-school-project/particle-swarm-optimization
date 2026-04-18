@@ -94,11 +94,20 @@ jobs:
             echo "${DELIMITER}"
           } >> "$GITHUB_OUTPUT"
 
+      - name: Check if prerelease
+        id: check_prerelease
+        run: |
+          if [[ "${{ github.ref_name }}" =~ -[a-zA-Z] ]]; then
+            echo "is_prerelease=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_prerelease=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Create Release
         uses: ncipollo/release-action@v1.21.0
         with:
           draft: false
-          prerelease: true
+          prerelease: ${{ steps.check_prerelease.outputs.is_prerelease }}
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
           name: "pso ${{ github.ref_name }}"
