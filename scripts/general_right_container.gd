@@ -7,15 +7,19 @@ extends MarginContainer
 @export var exploration: float = 1.0
 @export var exploitation: float = 1.0
 
-var variable_inertia: bool = false
 @export var min_inertia: float = 1.0
 @export var max_inertia: float = 2.0
 @export var inertia: float = 0.4
+var variable_inertia: bool = false
 
+@export var particle_number_spinbox: SpinBox
 @export var inertia_spinbox: SpinBox
 @export var inertia_hbox_container: HBoxContainer
 @export var min_inertia_spinbox: SpinBox
 @export var max_inertia_spinbox: SpinBox
+@export var exploration_spinbox: SpinBox
+@export var exploitation_spinbox: SpinBox
+@export var variable_inertia_toggle: CheckButton
 
 var screen_size: Vector2
 
@@ -187,12 +191,20 @@ func _on_exploitation_value_changed(value: float) -> void:
 
 func _on_start_pressed() -> void:
 	if get_tree().has_group("particles"):
+		particle_number_spinbox.value = 8
+		inertia_spinbox.value = 0.4
+		min_inertia_spinbox.value = 1.0
+		max_inertia_spinbox.value = 2.0
+		exploration_spinbox.value = 1.0
+		exploitation_spinbox.value = 1.0
+		variable_inertia_toggle.button_pressed = false
+		
 		for node in get_tree().get_nodes_in_group("particles"):
 			node.queue_free()
 		
 		generate_particles()
 	else:
-		var start_button: Button = $/root/General/RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/Start as Button
+		var start_button: Button = $/root/General/RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/Start as Button
 		start_button.text = "Recommencer"
 		start_button.icon = load("res://assets/icons/rotate--360.svg")
 		

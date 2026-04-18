@@ -121,6 +121,7 @@ color = Color(0.95686275, 0.95686275, 0.972549, 1)
 custom_minimum_size = Vector2(0, 364)
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_constants/margin_left = 20
 theme_override_constants/margin_right = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer"]
@@ -136,9 +137,7 @@ theme_override_constants/separation = 0
 [node name="Back" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(50, 40)
 layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 4
-size_flags_stretch_ratio = 0.3
+size_flags_horizontal = 8
 mouse_default_cursor_shape = 2
 theme = ExtResource("3_fdh1j")
 theme_type_variation = &"FlatButton"
@@ -173,34 +172,17 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="VariableInertiaToggle" type="CheckButton" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(180, 0)
-layout_mode = 2
-size_flags_horizontal = 8
-theme = ExtResource("2_oe3oi")
-theme_override_colors/font_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
-theme_override_colors/font_focus_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
-theme_override_colors/font_pressed_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
-theme_override_colors/font_hover_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
-theme_override_colors/button_checked_color = Color(0.9019608, 0.9019608, 0.91764706, 1)
-text = "Inertie variable"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
 theme_override_constants/separation = 40
 
-[node name="FirstRow" type="HBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="FirstRow" type="HBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_constants/separation = 24
 
-[node name="ParticleNumber" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow"]
+[node name="ParticleNumber" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow"]
 layout_mode = 2
 
-[node name="Label" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/ParticleNumber"]
+[node name="Label" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/ParticleNumber"]
 layout_mode = 2
 theme = ExtResource("2_oe3oi")
 theme_override_colors/default_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
@@ -209,7 +191,7 @@ text = "[b]Particules[/b]"
 fit_content = true
 scroll_active = false
 
-[node name="Value" type="SpinBox" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/ParticleNumber"]
+[node name="Value" type="SpinBox" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/ParticleNumber"]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 theme = ExtResource("2_oe3oi")
@@ -220,10 +202,10 @@ theme_override_colors/down_disabled_icon_modulate = Color(0.9019608, 0.9019608, 
 min_value = 2.0
 value = 8.0
 
-[node name="Inertia" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow"]
+[node name="Inertia" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow"]
 layout_mode = 2
 
-[node name="Label" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/Inertia"]
+[node name="Label" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia"]
 layout_mode = 2
 theme = ExtResource("2_oe3oi")
 theme_override_colors/default_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
@@ -232,10 +214,10 @@ text = "[b]Coefficient d'inertie[/b]"
 fit_content = true
 scroll_active = false
 
-[node name="MarginContainer" type="MarginContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/Inertia"]
+[node name="MarginContainer" type="MarginContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia"]
 layout_mode = 2
 
-[node name="Value" type="SpinBox" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/Inertia/MarginContainer"]
+[node name="Value" type="SpinBox" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer"]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 theme = ExtResource("2_oe3oi")
@@ -248,11 +230,11 @@ max_value = 2.0
 step = 0.1
 value = 0.4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/Inertia/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="MinValue" type="SpinBox" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer"]
+[node name="MinValue" type="SpinBox" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme = ExtResource("2_oe3oi")
@@ -265,7 +247,7 @@ max_value = 2.0
 step = 0.1
 value = 1.0
 
-[node name="MaxValue" type="SpinBox" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer"]
+[node name="MaxValue" type="SpinBox" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 theme = ExtResource("2_oe3oi")
@@ -278,15 +260,15 @@ max_value = 2.0
 step = 0.1
 value = 2.0
 
-[node name="SecondRow" type="HBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="SecondRow" type="HBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_constants/separation = 24
 
-[node name="Exploration" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/SecondRow"]
+[node name="Exploration" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow"]
 layout_mode = 2
 
-[node name="Label" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/SecondRow/Exploration"]
+[node name="Label" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow/Exploration"]
 layout_mode = 2
 theme = ExtResource("2_oe3oi")
 theme_override_colors/default_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
@@ -295,7 +277,7 @@ text = "[b]Exploration[/b]"
 fit_content = true
 scroll_active = false
 
-[node name="Value" type="SpinBox" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/SecondRow/Exploration"]
+[node name="Value" type="SpinBox" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow/Exploration"]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 theme = ExtResource("2_oe3oi")
@@ -307,10 +289,10 @@ max_value = 1.0
 step = 0.1
 value = 1.0
 
-[node name="Exploitation" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/SecondRow"]
+[node name="Exploitation" type="VBoxContainer" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow"]
 layout_mode = 2
 
-[node name="Label" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/SecondRow/Exploitation"]
+[node name="Label" type="RichTextLabel" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow/Exploitation"]
 layout_mode = 2
 theme = ExtResource("2_oe3oi")
 theme_override_colors/default_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
@@ -319,7 +301,7 @@ text = "[b]Exploitation[/b]"
 fit_content = true
 scroll_active = false
 
-[node name="Value" type="SpinBox" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/SecondRow/Exploitation"]
+[node name="Value" type="SpinBox" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow/Exploitation"]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 theme = ExtResource("2_oe3oi")
@@ -331,7 +313,20 @@ max_value = 1.0
 step = 0.1
 value = 1.0
 
-[node name="Start" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="VariableInertiaToggle" type="CheckButton" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme = ExtResource("3_fdh1j")
+theme_override_colors/font_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_focus_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_pressed_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_hover_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.02745098, 0.03529412, 0.05882353, 1)
+theme_override_colors/button_checked_color = Color(0.9019608, 0.9019608, 0.91764706, 1)
+text = "Inertie variable"
+
+[node name="Start" type="Button" parent="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(180, 40)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -350,17 +345,21 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_dfvab")
 text = "Commencer"
 icon = ExtResource("4_7h5e4")
 
-[node name="RightContainer" type="MarginContainer" parent="RootContainer/HBoxContainer" node_paths=PackedStringArray("inertia_spinbox", "inertia_hbox_container", "min_inertia_spinbox", "max_inertia_spinbox")]
+[node name="RightContainer" type="MarginContainer" parent="RootContainer/HBoxContainer" node_paths=PackedStringArray("particle_number_spinbox", "inertia_spinbox", "inertia_hbox_container", "min_inertia_spinbox", "max_inertia_spinbox", "exploration_spinbox", "exploitation_spinbox", "variable_inertia_toggle")]
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("3_pduxd")
 particle_scene = ExtResource("4_gy7hs")
 target_scene = ExtResource("5_fdh1j")
-inertia_spinbox = NodePath("../LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/Value")
-inertia_hbox_container = NodePath("../LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer")
-min_inertia_spinbox = NodePath("../LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer/MinValue")
-max_inertia_spinbox = NodePath("../LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer/MaxValue")
+particle_number_spinbox = NodePath("../LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/ParticleNumber/Value")
+inertia_spinbox = NodePath("../LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/Value")
+inertia_hbox_container = NodePath("../LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer")
+min_inertia_spinbox = NodePath("../LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer/MinValue")
+max_inertia_spinbox = NodePath("../LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer/MaxValue")
+exploration_spinbox = NodePath("../LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow/Exploration/Value")
+exploitation_spinbox = NodePath("../LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow/Exploitation/Value")
+variable_inertia_toggle = NodePath("../LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VariableInertiaToggle")
 
 [node name="GridRect" type="ColorRect" parent="RootContainer/HBoxContainer/RightContainer"]
 material = SubResource("ShaderMaterial_cxwob")
@@ -377,12 +376,12 @@ shape = SubResource("RectangleShape2D_2p8t7")
 [node name="Particles" type="Node2D" parent="RootContainer/HBoxContainer/RightContainer"]
 
 [connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/HBoxContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/ParticleNumber/Value" to="RootContainer/HBoxContainer/RightContainer" method="_on_particle_value_changed"]
+[connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/Value" to="RootContainer/HBoxContainer/RightContainer" method="_on_inertia_value_changed"]
+[connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer/MinValue" to="RootContainer/HBoxContainer/RightContainer" method="_on_min_inertia_value_value_changed"]
+[connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer/MaxValue" to="RootContainer/HBoxContainer/RightContainer" method="_on_max_inertia_value_changed"]
+[connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow/Exploration/Value" to="RootContainer/HBoxContainer/RightContainer" method="_on_exploration_value_changed"]
+[connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/SecondRow/Exploitation/Value" to="RootContainer/HBoxContainer/RightContainer" method="_on_exploitation_value_changed"]
 [connection signal="toggled" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VariableInertiaToggle" to="RootContainer/HBoxContainer/RightContainer" method="_on_variable_inertia_toggle_toggled"]
-[connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/ParticleNumber/Value" to="RootContainer/HBoxContainer/RightContainer" method="_on_particle_value_changed"]
-[connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/Value" to="RootContainer/HBoxContainer/RightContainer" method="_on_inertia_value_changed"]
-[connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer/MinValue" to="RootContainer/HBoxContainer/RightContainer" method="_on_min_inertia_value_value_changed"]
-[connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer/MaxValue" to="RootContainer/HBoxContainer/RightContainer" method="_on_max_inertia_value_changed"]
-[connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/SecondRow/Exploration/Value" to="RootContainer/HBoxContainer/RightContainer" method="_on_exploration_value_changed"]
-[connection signal="value_changed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/SecondRow/Exploitation/Value" to="RootContainer/HBoxContainer/RightContainer" method="_on_exploitation_value_changed"]
-[connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/Start" to="RootContainer/HBoxContainer/RightContainer" method="_on_start_pressed"]
+[connection signal="pressed" from="RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/Start" to="RootContainer/HBoxContainer/RightContainer" method="_on_start_pressed"]
 [connection signal="input_event" from="RootContainer/HBoxContainer/RightContainer/Area2D" to="RootContainer/HBoxContainer/RightContainer" method="_on_area_2d_input_event"]
