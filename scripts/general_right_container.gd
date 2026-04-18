@@ -7,10 +7,15 @@ extends MarginContainer
 @export var exploration: float = 1.0
 @export var exploitation: float = 1.0
 
+var variable_inertia: bool = false
 @export var min_inertia: float = 1.0
 @export var max_inertia: float = 2.0
 @export var inertia: float = 0.4
-var variable_inertia: bool = false
+
+@export var inertia_spinbox: SpinBox
+@export var inertia_hbox_container: HBoxContainer
+@export var min_inertia_spinbox: SpinBox
+@export var max_inertia_spinbox: SpinBox
 
 var screen_size: Vector2
 
@@ -19,25 +24,17 @@ var global_best_distance: float = INF
 
 func _ready() -> void:
 	screen_size = get_viewport().get_visible_rect().size
-	($/root/General/RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer as HBoxContainer).hide()
+	
+	inertia_hbox_container.hide()
+	inertia_hbox_container.set_process(false)
 
 
 func _physics_process(delta: float) -> void:
-	# uncomment below for the target to follow mouse once created
-	#if get_tree().has_group("target"):
-		#var target: Area2D = get_tree().get_first_node_in_group("target") as Area2D
-		#var mouse_pos = get_global_mouse_position()
-		#if target.global_position != mouse_pos:
-			#target.global_position = mouse_pos
-			#reset_pso()
-	
 	if get_tree().has_group("target"):
-		var source: Array[Node] = get_tree().get_nodes_in_group("particles")
-		var particles: Array[Particle]
-		
-		for node in source:
+		var particles: Array[Particle] = []
+		for node in get_tree().get_nodes_in_group("particles"):
 			if node is Particle:
-				particles.push_back(node as Particle)
+				particles.append(node)
 		
 		pso(particles, delta)
 	
@@ -45,21 +42,23 @@ func _physics_process(delta: float) -> void:
 		reset_pso()
 
 
+func _spawn_particle() -> Particle:
+	var p: Particle = particle_scene.instantiate()
+	p.position = Vector2(
+		randf_range(0.0, screen_size.x),
+		randf_range(0.0, screen_size.y)
+	)
+	p.velocity = Vector2.from_angle(randf() * TAU) * randf_range(10.0, 20.0)
+	$Particles.add_child(p)
+	p.add_to_group("particles")
+	return p
+
+
 func generate_particles() -> void:
 	for i in particle_number:
-		var particle: Particle = particle_scene.instantiate()
-		particle.position = Vector2(
-			randf_range(0.0, screen_size.x),
-			randf_range(0.0, screen_size.y)
-		)
-		
-		var speed: float = randf_range(10.0, 20.0)
-		var angle: float = randf() * TAU
-		particle.velocity = Vector2.from_angle(angle) * speed
-		
-		$Particles.add_child(particle)
-		particle.add_to_group("particles")
-
+		var particle: Particle = _spawn_particle()
+		if get_tree().has_group("target"):
+			particle.set_target(true)
 
 func _set_particles_target(value: bool) -> void:
 	for node in get_tree().get_nodes_in_group("particles"):
@@ -130,18 +129,19 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 
 func _on_variable_inertia_toggle_toggled(toggled_on: bool) -> void:
 	variable_inertia = toggled_on
-	var container: MarginContainer = $/root/General/RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer as MarginContainer
 	
 	if toggled_on:
-		container.get_node("Value").set_process(false)
-		(container.get_node("Value") as SpinBox).hide()
-		container.get_node("HBoxContainer").set_process(true)
-		(container.get_node("HBoxContainer") as HBoxContainer).show()
+		inertia_spinbox.set_process(false)
+		inertia_spinbox.hide()
+		
+		inertia_hbox_container.set_process(true)
+		inertia_hbox_container.show()
 	else:
-		container.get_node("Value").set_process(true)
-		(container.get_node("Value") as SpinBox).show()
-		container.get_node("HBoxContainer").set_process(false)
-		(container.get_node("HBoxContainer") as HBoxContainer).hide()
+		inertia_spinbox.set_process(true)
+		inertia_spinbox.show()
+		
+		inertia_hbox_container.set_process(false)
+		inertia_hbox_container.hide()
 
 
 func _on_particle_value_changed(value: float) -> void:
@@ -150,17 +150,9 @@ func _on_particle_value_changed(value: float) -> void:
 	var difference: int = new_particle_count - current_particles.size()
 	if difference > 0:
 		for i in difference:
-			var p: Particle = particle_scene.instantiate()
-			p.position = Vector2(
-				randf_range(0.0, screen_size.x),
-			 	randf_range(0.0, screen_size.y)
-			)
-			p.velocity = Vector2.from_angle(randf() * TAU) * randf_range(10.0, 20.0)
-			$Particles.add_child(p)
-			p.add_to_group("particles")
-			
+			var particle: Particle = _spawn_particle()
 			if get_tree().has_group("target"):
-				p.set_target(true)
+				particle.set_target(true)
 	elif difference < 0:
 		for i in abs(difference):
 			current_particles[current_particles.size() - 1 - i].queue_free()
@@ -174,10 +166,15 @@ func _on_inertia_value_changed(value: float) -> void:
 
 func _on_min_inertia_value_value_changed(value: float) -> void:
 	min_inertia = value
+	inertia = value
+	
+	max_inertia_spinbox.min_value = value + max_inertia_spinbox.step
 
 
 func _on_max_inertia_value_changed(value: float) -> void:
 	max_inertia = value
+	
+	min_inertia_spinbox.max_value = value - min_inertia_spinbox.step
 
 
 func _on_exploration_value_changed(value: float) -> void:
@@ -189,26 +186,13 @@ func _on_exploitation_value_changed(value: float) -> void:
 
 
 func _on_start_pressed() -> void:
-	# For manual handling of changes application
-	#var form_container: VBoxContainer = $/root/General/RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer
-	#
-	#var particle_number_form: SpinBox = form_container.get_node("FirstRow").get_node("ParticleNumber").get_node("Value") as SpinBox
-	#var inertia_form: SpinBox = form_container.get_node("FirstRow").get_node("Inertia").get_node("MarginContainer").get_node("Value") as SpinBox
-	#var exploration_form: SpinBox = form_container.get_node("SecondRow").get_node("Exploration").get_node("Value") as SpinBox
-	#var exploitation_form: SpinBox = form_container.get_node("SecondRow").get_node("Exploitation").get_node("Value") as SpinBox
-	
-	#particle_number = int(particle_number_form.value)
-	#inertia = inertia_form.value
-	#exploration = exploration_form.value
-	#exploitation = exploitation_form.value
-	
 	if get_tree().has_group("particles"):
 		for node in get_tree().get_nodes_in_group("particles"):
 			node.queue_free()
 		
 		generate_particles()
 	else:
-		var start_button: Button = $/root/General/RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/Start as Button
+		var start_button: Button = $/root/General/RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/Start as Button
 		start_button.text = "Recommencer"
 		start_button.icon = load("res://assets/icons/rotate--360.svg")
 		
