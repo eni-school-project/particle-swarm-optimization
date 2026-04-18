@@ -297,13 +297,17 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_dfvab")
 text = "Commencer"
 icon = ExtResource("4_7h5e4")
 
-[node name="RightContainer" type="MarginContainer" parent="RootContainer/HBoxContainer"]
+[node name="RightContainer" type="MarginContainer" parent="RootContainer/HBoxContainer" node_paths=PackedStringArray("inertia_spinbox", "inertia_hbox_container", "min_inertia_spinbox", "max_inertia_spinbox")]
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("3_pduxd")
 particle_scene = ExtResource("4_gy7hs")
 target_scene = ExtResource("5_fdh1j")
+inertia_spinbox = NodePath("../LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/Value")
+inertia_hbox_container = NodePath("../LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer")
+min_inertia_spinbox = NodePath("../LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer/MinValue")
+max_inertia_spinbox = NodePath("../LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/VBoxContainer/FirstRow/Inertia/MarginContainer/HBoxContainer/MaxValue")
 
 [node name="GridRect" type="ColorRect" parent="RootContainer/HBoxContainer/RightContainer"]
 material = SubResource("ShaderMaterial_cxwob")
