@@ -31,8 +31,10 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if get_tree().has_group("target"):
-		var particles: Array[Particle] = get_tree().get_nodes_in_group("particles")\
-			.filter(func(n): return n is Particle) as Array[Particle]
+		var particles: Array[Particle] = []
+		for node in get_tree().get_nodes_in_group("particles"):
+			if node is Particle:
+				particles.append(node)
 		
 		pso(particles, delta)
 	
