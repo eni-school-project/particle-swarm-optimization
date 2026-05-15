@@ -9,7 +9,7 @@ extends MarginContainer
 
 @export var min_inertia: float = 1.0
 @export var max_inertia: float = 2.0
-@export var inertia: float = 0.4
+@export var inertia: float = 1.0
 var variable_inertia: bool = false
 
 @export var particle_number_spinbox: SpinBox
@@ -192,7 +192,7 @@ func _on_exploitation_value_changed(value: float) -> void:
 func _on_start_pressed() -> void:
 	if get_tree().has_group("particles"):
 		particle_number_spinbox.value = 8
-		inertia_spinbox.value = 0.4
+		inertia_spinbox.value = 1.0
 		min_inertia_spinbox.value = 1.0
 		max_inertia_spinbox.value = 2.0
 		exploration_spinbox.value = 1.0
