@@ -1,7 +1,7 @@
 extends Control
 
-@onready var menu := $RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/Menu
-@onready var sub_menu := $RootContainer/HBoxContainer/LeftContainer/ForegroundContainer/VBoxContainer/MarginContainer/SubMenu
+@onready var menu := $RootContainer/ForegroundContainer/VBoxContainer/MarginContainer/Menu
+@onready var sub_menu := $RootContainer/ForegroundContainer/VBoxContainer/MarginContainer/SubMenu
 
 const SLIDE_AMOUNT := 100.0
 const DURATION := 0.4
@@ -66,3 +66,7 @@ func _on_back_pressed() -> void:
 
 func _on_point_pressed() -> void:
 	get_tree().call_deferred("change_scene_to_file", "res://scenes/general.tscn")
+
+
+func _on_maison_pressed() -> void:
+	get_tree().call_deferred("change_scene_to_file", "res://scenes/specifique.tscn")
